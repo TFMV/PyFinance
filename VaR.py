@@ -1,23 +1,47 @@
-# Value at Risk implementation in python
+# Value at Risk implementation in Python
 # By Thomas McGeehan
-# Uses yahoo finance to get historical stock data for a single ticker
+# Uses yfinance to get historical stock data for a single ticker
 # Variance-Covariance calculation of daily Value-at-Risk
+
 import datetime
 import numpy as np
+import yfinance as yf
 from scipy.stats import norm
-import pandas_datareader.data as web
 
-ticker = 'WFC'
-start = datetime.datetime(2010, 1, 1)
-end = datetime.datetime(2016, 1, 1)
+def get_stock_data(ticker, start_date, end_date):
+    """Fetch historical stock data from Yahoo Finance."""
+    stock = yf.download(ticker, start=start_date, end=end_date)
+    stock['rets'] = stock['Adj Close'].pct_change()
+    return stock
 
-stock = web.DataReader(ticker, 'yahoo', start, end) 
-stock['rets'] = stock['Adj Close'].pct_change()
+def calculate_var(stock_data, portfolio_value, confidence_interval):
+    """Calculate the Value-at-Risk (VaR) for a given stock data."""
+    mu = np.mean(stock_data['rets'])
+    sigma = np.std(stock_data['rets'])
+    var = portfolio_value - portfolio_value * (norm.ppf(1 - confidence_interval, mu, sigma) + 1)
+    return var
 
-P = 1e6   # 1,000,000 USD
-c = 0.99  # 99% confidence interval
-mu = np.mean(stock['rets'])
-sigma = np.std(stock['rets'])
-var = P - P*(norm.ppf(1-c, mu, sigma) + 1)
-print 'Ticker: ', ticker 
-print "Value-at-Risk: $%0.3f" % var 
+def main():
+    # Define parameters
+    ticker = 'WFC'
+    start_date = '2010-01-01'
+    end_date = '2016-01-01'
+    portfolio_value = 1e6  # 1,000,000 USD
+    confidence_interval = 0.99  # 99% confidence interval
+
+    try:
+        # Fetch stock data
+        stock_data = get_stock_data(ticker, start_date, end_date)
+        
+        # Calculate VaR
+        var = calculate_var(stock_data, portfolio_value, confidence_interval)
+        
+        # Output results
+        print(f'Ticker: {ticker}')
+        print(f"Value-at-Risk: ${var:,.2f}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+if __name__ == "__main__":
+    main()
+
