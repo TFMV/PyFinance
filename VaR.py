@@ -7,6 +7,7 @@ import datetime
 import numpy as np
 import yfinance as yf
 from scipy.stats import norm
+import argparse
 
 def get_stock_data(ticker, start_date, end_date):
     """Fetch historical stock data from Yahoo Finance."""
@@ -22,8 +23,13 @@ def calculate_var(stock_data, portfolio_value, confidence_interval):
     return var
 
 def main():
+    # Set up argument parser
+    parser = argparse.ArgumentParser(description="Calculate Value at Risk (VaR) for a given stock ticker.")
+    parser.add_argument("ticker", type=str, help="Stock ticker symbol")
+    args = parser.parse_args()
+    
     # Define parameters
-    ticker = 'WFC'
+    ticker = args.ticker
     start_date = '2010-01-01'
     end_date = '2016-01-01'
     portfolio_value = 1e6  # 1,000,000 USD
@@ -44,4 +50,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
