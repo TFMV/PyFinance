@@ -21,3 +21,7 @@ PyFinance is a project that provides tools for financial analysis and forecastin
 ## License
 
 This project is licensed under the MIT License
+
+## Author
+
+Thomas F McGeehan V
