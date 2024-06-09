@@ -1,57 +1,22 @@
-# Value at Risk (VaR) Implementation
+# PyFinance
 
-This project provides a Python implementation for calculating the Value at Risk (VaR) of a financial portfolio using historical stock data. The VaR calculation is based on the Variance-Covariance method.
+PyFinance is a project that provides tools for financial analysis and forecasting. It includes implementations for predicting stock prices using deep learning and calculating the Value at Risk (VaR) of a financial portfolio.
 
 ![PyFinance](assets/PyFinance.webp)
 
 ## Features
 
+### Stock Price Prediction
+
+- **Historical Data Fetching:** Uses `yfinance` to fetch historical stock data from Yahoo Finance.
+- **Data Preprocessing:** Applies EMA and FFT transformations to preprocess the data.
+- **Hybrid CNN-LSTM Model:** Combines Convolutional Neural Networks (CNN) and Long Short-Term Memory (LSTM) networks for time series forecasting.
+- **Model Evaluation:** Evaluates the model using Mean Absolute Error (MAE).
+
+### Value at Risk (VaR) Calculation
+
 - **Historical Data Fetching:** Uses `yfinance` to fetch historical stock data from Yahoo Finance.
 - **Variance-Covariance VaR Calculation:** Calculates daily VaR at a specified confidence interval.
-
-## Installation
-
-To run this project, you'll need to have Python installed. It's recommended to use a virtual environment. Follow these steps to set up and run the project:
-
-1. **Clone the Repository:**
-
-    ```bash
-    git clone https://github.com/yourusername/PyFinance.git
-    cd PyFinance
-    ```
-
-2. **Create a Virtual Environment:**
-
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-    ```
-
-3. **Install the Required Libraries:**
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. **Run the Script:**
-
-You will want to update the portfolio value and perhaps confidence
-
-Provide the ticker as an argument, like so
-
-```bash
-python VaR.py WFC
-```
-
-## Example Output
-
-When you run the script, you should see an output similar to the following:
-
-```bash
-[*******************100%%********************] 1 of 1 completed
-Ticker: WFC
-Value-at-Risk: $36,958.04
-```
 
 ## License
 
