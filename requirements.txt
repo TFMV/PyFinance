@@ -1,3 +1,7 @@
-numpy
-scipy
 yfinance
+numpy
+pandas
+scikit-learn
+tensorflow
+scip
+argparse
